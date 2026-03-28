@@ -1,0 +1,6 @@
+2026-03-28 15:55:22,704 - INFO - Placing MARKET BUY order for 0.001 BTCUSDT
+2026-03-28 15:55:23,340 - ERROR - Order failed: {'code': -4164, 'msg': "Order's notional must be no smaller than 100 (unless you choose reduce only)."}
+2026-03-28 15:55:55,512 - INFO - Placing MARKET BUY order for 0.002 BTCUSDT
+2026-03-28 15:55:56,177 - INFO - Order successful! ID: 13001852818 | Status: NEW
+2026-03-28 15:56:41,098 - INFO - Placing LIMIT SELL order for 0.002 BTCUSDT
+2026-03-28 15:56:41,654 - INFO - Order successful! ID: 13001854379 | Status: NEW
