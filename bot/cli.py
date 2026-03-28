@@ -3,27 +3,26 @@ from bot.validators import validate_symbol, validate_side, validate_order_type, 
 from bot.orders import place_order
 from bot.logging_config import logger
 
-def main():
-    parser = argparse.ArgumentParser(description="Binance Futures Trading Bot")
-    parser.add_argument("--symbol", required=True, help="Trading pair e.g. BTCUSDT")
-    parser.add_argument("--side", required=True, help="BUY or SELL")
-    parser.add_argument("--type", dest="order_type", required=True, help="MARKET or LIMIT")
-    parser.add_argument("--quantity", required=True, help="Order quantity e.g. 0.001")
-    parser.add_argument("--price", required=False, help="Price for LIMIT orders")
+def interactive_mode():
+    print("\nWelcome to Binance Futures Trading Bot!")
+    print("==========================================\n")
 
-    args = parser.parse_args()
+    symbol = input("Enter symbol (e.g. BTCUSDT): ").strip()
+    side = input("Enter side (BUY or SELL): ").strip()
+    order_type = input("Enter order type (MARKET or LIMIT): ").strip()
+    quantity = input("Enter quantity (e.g. 0.002): ").strip()
+
+    price = None
+    if order_type.upper() == "LIMIT":
+        price = input("Enter price: ").strip()
 
     try:
-        symbol = validate_symbol(args.symbol)
-        side = validate_side(args.side)
-        order_type = validate_order_type(args.order_type)
-        quantity = validate_quantity(args.quantity)
-
-        price = None
-        if order_type == "LIMIT":
-            if not args.price:
-                raise ValueError("Price is required for LIMIT orders.")
-            price = validate_price(args.price)
+        symbol = validate_symbol(symbol)
+        side = validate_side(side)
+        order_type = validate_order_type(order_type)
+        quantity = validate_quantity(quantity)
+        if price:
+            price = validate_price(price)
 
         print(f"\n--- Order Request ---")
         print(f"Symbol   : {symbol}")
@@ -44,12 +43,13 @@ def main():
         print("----------------------\n")
 
     except ValueError as e:
-        logger.error(f"Validation error: {e}")
         print(f"Error: {e}")
-
     except Exception as e:
-        logger.error(f"Unexpected error: {e}")
         print(f"Something went wrong: {e}")
 
 if __name__ == "__main__":
-    main()
+    import sys
+    if len(sys.argv) == 1:
+        interactive_mode()
+    else:
+        main()
