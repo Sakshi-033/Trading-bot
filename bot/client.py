@@ -13,6 +13,9 @@ BASE_URL = "https://testnet.binancefuture.com"
 api_key = os.getenv("BINANCE_API_KEY")
 secret_key = os.getenv("BINANCE_SECRET_KEY")
 
+if not api_key or not secret_key:
+    raise EnvironmentError("BINANCE_API_KEY and BINANCE_SECRET_KEY must be set in .env file")
+
 def sign(params: dict) -> str:
     query_string = urlencode(params)
     signature = hmac.new(
